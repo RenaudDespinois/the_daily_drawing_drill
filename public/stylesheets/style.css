@@ -1,7 +1,34 @@
+/*
+ * Grab a custom font from Google
+ */
+@import url("http://fonts.googleapis.com/css?family=Finger+Paint");
+/*
+ * Store the main color and
+ * background color as variables
+ */
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Finger Paint';
+  font-size: 20px;
+  margin: auto;
+  margin-top: 0;
+  background-color: #f4f4f4;
+  color: #000;
+  height: 100%;
 }
-a {
-  color: #00b7ff;
+#content-container {
+  display: block;
+  width: 1000px;
+  height: 1000px;
+  margin: auto;
+  margin-top: 0px;
+  padding-top: 0px;
+  background: #fff url("../images/bg.png") no-repeat;
+}
+#page-content {
+  display: block;
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  left: 300px;
+  top: 250px;
 }

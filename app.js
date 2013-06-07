@@ -4,10 +4,12 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
+  , model = require('./model')
+  , index_route = require('./routes/index')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , DrillProvider = require('./public/javascripts/drillProvider.js').DrillProvider
+  , drillProvider = new DrillProvider();
 
 var app = express();
 
@@ -28,8 +30,9 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/',function (req, res) {
+	index_route.indexGet(req, res, drillProvider);
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
