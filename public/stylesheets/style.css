@@ -18,31 +18,23 @@ body {
 #content-container {
   display: block;
   width: 1000px;
-  height: 1000px;
+  height: 1200px;
   margin: auto;
   margin-top: 0px;
   padding-top: 0px;
   background: #fff url("../images/bg.png") no-repeat;
 }
-#page-content {
-  display: block;
-  position: relative;
-  margin: 0px;
-  padding: 0px;
-  left: 320px;
-  top: 250px;
-}
-a#link {
+a#reload {
   display: block;
   position: relative;
   background: url("../images/reload.png");
   background-repeat: no-repeat;
   width: 52px;
   height: 58px;
-  left: 420px;
-  top: 20px;
+  left: 720px;
+  top: 420px;
 }
-a#link:hover {
+a#reload:hover {
   background: url("../images/reload_hover.png");
   cursor: pointer;
 }

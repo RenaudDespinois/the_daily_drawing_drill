@@ -7,9 +7,7 @@ var express = require('express')
   , model = require('./model')
   , index_route = require('./routes/index')
   , http = require('http')
-  , path = require('path')
-  , DrillProvider = require('./public/javascripts/drillProvider.js').DrillProvider
-  , drillProvider = new DrillProvider();
+  , path = require('path');
 
 var app = express();
 
@@ -31,7 +29,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/',function (req, res) {
-	index_route.indexGet(req, res, drillProvider);
+	index_route.indexGet(req, res);
 });
 
 http.createServer(app).listen(app.get('port'), function(){

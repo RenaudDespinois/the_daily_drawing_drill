@@ -6,7 +6,7 @@ var	mongoose = require('mongoose'),
 	Trunk = mongoose.model('Trunk'),
 	Branch = mongoose.model('Branch');
 
-exports.indexGet = function(req, res, drillProvider){
+exports.indexGet = function(req, res){
 	Trunk.find({
 				name: 'Main'
 				}, 
@@ -21,7 +21,7 @@ exports.indexGet = function(req, res, drillProvider){
 										},
 										function (err2, mybranches) {
 											if (mybranches && mybranches.length) {
-												res.render('index', { branches: drillProvider.getRandomLeaves(mybranches)});
+												res.render('index', { branches: JSON.stringify(mybranches)});
 											} else {
 												res.render('index', { title: 'ERROR' });
 											} 

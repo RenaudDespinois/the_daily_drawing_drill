@@ -1,7 +1,8 @@
 extends layout
 
+block head
+	script(src='./javascripts/libs/require/require.js',type="text/javascript",charset="utf-8",data-main='./javascripts/home')
+
 block content
-	#branches
-		each branch in branches
-			li= branch.resultStr
-	a#link(onclick='document.location.reload(true)')
+	input(type='hidden',id='branches',value=branches)
+	a#reload
