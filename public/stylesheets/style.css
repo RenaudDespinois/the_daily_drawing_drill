@@ -24,6 +24,13 @@ body {
   padding-top: 0px;
   background: #fff url("../images/bg.png") no-repeat;
 }
+.leaf:hover {
+  fill: #ec6162;
+  cursor: pointer;
+}
+.test {
+  fill: #f4f4f4;
+}
 a#reload {
   display: block;
   position: relative;
@@ -37,4 +44,7 @@ a#reload {
 a#reload:hover {
   background: url("../images/reload_hover.png");
   cursor: pointer;
+}
+a#reload:active {
+  background: url("../images/reload_click.png");
 }

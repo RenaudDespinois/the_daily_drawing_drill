@@ -1,29 +1,45 @@
 define('DrillProvider', function() {
+	var _branches;
 
 	/**
 	 * 
 	 */
-	DrillProvider = function () {
+	DrillProvider = function (branches) {
+		_branches = branches;
 	};
 	
 	/**
 	 * 
 	 */
+	DrillProvider.prototype.setBranches = function (branches) {
+		_branches = branches;
+	}
+	
+	/**
+	 * 
+	 */
 	DrillProvider.prototype.getRandomLeaf = function (aBranch) {
-		var myTotalWeight = 0;
+		var myLeaf, myTotalWeight = 0;
 		
-		for (var i=0; i<aBranch.leaves.length; i++)
-			myTotalWeight += aBranch.leaves[i].weight;	
-		 
-		var myThresh = Math.floor(Math.random()*myTotalWeight);
-		var myLeaf;
+		//First we check if the leaf is locked
+		var myLockedBranch = $.grep(aBranch.leaves, function (d) { return d.locked });
 		
-		for (var i=0;i<aBranch.leaves.length; i++) {
-			myThresh -= aBranch.leaves[i].weight;
-		    if ( myThresh < 0 ) {
-		    	myLeaf =  aBranch.leaves[i];
-		        break;
-		    }
+		if (myLockedBranch && myLockedBranch.length>0) {
+			myLeaf = myLockedBranch[0];
+		} else {
+			for (var i=0; i<aBranch.leaves.length; i++)
+				myTotalWeight += aBranch.leaves[i].weight;	
+			 
+			var myThresh = Math.floor(Math.random()*myTotalWeight);
+			
+			
+			for (var i=0;i<aBranch.leaves.length; i++) {
+				myThresh -= aBranch.leaves[i].weight;
+			    if ( myThresh < 0 ) {
+			    	myLeaf =  aBranch.leaves[i];
+			        break;
+			    }
+			}
 		}
 		
 		return myLeaf;
@@ -33,25 +49,26 @@ define('DrillProvider', function() {
 	/**
 	 * 
 	 */
-	DrillProvider.prototype.getRandomLeaves = function (aBranches) {
+	DrillProvider.prototype.getRandomLeaves = function () {
 		var myLeaves = [];
 		var myExcludes = [];
 		
-		for (var i=0; i<aBranches.length; i++) {
+		for (var i=0; i<_branches.length; i++) {
 			var myLeaf;
 			do {
-				myLeaf = this.getRandomLeaf(aBranches[i]);
+				myLeaf = this.getRandomLeaf(_branches[i]);
 			} while (myExcludes.indexOf(myLeaf._id)!=-1);
 			
 			/*
 			 * We format the leaf name
 			 */
-			myLeaf.resultStr = aBranches[i].name;
-			for (var j=0; j<(20-aBranches[i].name.length);j++)
+			myLeaf.resultStr = _branches[i].name;
+			for (var j=0; j<(20-_branches[i].name.length);j++)
 				myLeaf.resultStr += ".";
+			myLeaf.parent = _branches[i];
 			myLeaf.resultStr += " "+myLeaf.name;
 			myLeaves.push (myLeaf);
-			myLeaves = myLeaves.concat (myLeaf.excludes);
+			myExcludes = myExcludes.concat (myLeaf.excludes);
 		}
 			
 		return myLeaves;
