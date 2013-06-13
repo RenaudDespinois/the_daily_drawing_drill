@@ -11,4 +11,5 @@ block content
 	input(type='hidden',id='branches',value=branches)
 	p Here's the drill:
 	#svg-container
-	a#reload
+	img.clickable(id='reload', src='/images/reload.png', title='New drill', width='28px', height='31px', onmouseover='this.src="/images/reload_hover.png"', onmouseout='this.src="/images/reload.png"'))
+	img.clickable(id='lock_free', src='/images/lock_free.png', title='Free locks', width='30px', height='34px', onmouseover='this.src="/images/lock_free_hover.png"', onmouseout='this.src="/images/lock_free.png"'))

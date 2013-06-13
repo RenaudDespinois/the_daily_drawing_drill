@@ -1,8 +1,18 @@
 extends layout
+
+block head
+	script(src='/javascripts/libs/require/require.js',type="text/javascript",charset="utf-8",data-main='/javascripts/weekly')
 	
 block menu
 	- var ref_page='weekly'
 
 block content
 	h1 Weekly drills
-	p Under construction... 
+	input(type='hidden',id='branches',value=branches)
+	#svg-container
+	img.clickable(id='previous', src='/images/arrow_prev.png', title='Previous day', width='34px', height='31px', onmouseover='this.src="/images/arrow_prev_hover.png"', onmouseout='this.src="/images/arrow_prev.png"'))
+	img.clickable(id='next', src='/images/arrow_next.png', title='Next day', width='34px', height='31px', onmouseover='this.src="/images/arrow_next_hover.png"', onmouseout='this.src="/images/arrow_next.png"'))
+	img.clickable(id='reload_day', src='/images/reload_day.png', title='New daily drill', width='28px', height='31px', onmouseover='this.src="/images/reload_day_hover.png"', onmouseout='this.src="/images/reload_day.png"'))
+	img.clickable(id='reload', src='/images/reload.png', title='New weekly drill', width='28px', height='31px', onmouseover='this.src="/images/reload_hover.png"', onmouseout='this.src="/images/reload.png"'))
+	img.clickable(id='lock_free', src='/images/lock_free.png', title='Free locks', width='30px', height='34px', onmouseover='this.src="/images/lock_free_hover.png"', onmouseout='this.src="/images/lock_free.png"'))
+	

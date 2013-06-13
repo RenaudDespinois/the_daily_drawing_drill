@@ -67,38 +67,55 @@ html {
   fill: #455ba1;
 }
 .leaf:hover {
-  fill: #ec6162;
+  fill: #e06284;
   cursor: pointer;
 }
-a#reload {
+#reload_day {
   display: block;
   position: absolute;
-  background: url("../images/reload.png");
-  background-repeat: no-repeat;
-  width: 52px;
-  height: 58px;
-  left: 440px;
-  top: 240px;
+  left: 403px;
+  top: 22px;
 }
-a#reload:hover {
-  background: url("../images/reload_hover.png");
-  cursor: pointer;
+#reload {
+  display: block;
+  position: absolute;
+  left: 448px;
+  top: 22px;
 }
-a#reload:active {
-  background: url("../images/reload_click.png");
+#lock_free {
+  display: block;
+  position: absolute;
+  left: 488px;
+  top: 22px;
+}
+#previous {
+  display: none;
+  position: absolute;
+  left: 85px;
+  top: 92px;
+}
+#next {
+  display: block;
+  position: absolute;
+  left: 385px;
+  top: 92px;
 }
 h1 {
-  color: #455ba1;
+  color: #e06284;
   font-weight: normal;
   font-size: 26px;
   padding-bottom: 20px;
+}
+.day {
+  font-weight: normal;
+  font-size: 20px;
 }
 #paypal_form {
   width: 50%;
   margin: 30px 100px 0px auto;
 }
 .to_come {
-  color: #455ba1;
+  color: #e06284;
   font-style: italic;
 }
 #mailto {

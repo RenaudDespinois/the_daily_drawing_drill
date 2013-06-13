@@ -6,13 +6,17 @@ require(["DrillProvider"], function (DrillProvider) {
 		drillProvider = new DrillProvider(),
 		svg_width=1000,
 		svg_height=185,
-		default_x=0,
+		default_x=20,
 		default_y=40,
-		max_width=380,
-		line_spacing=45,
+		max_width=335,
+		line_spacing=35,
 		lock_dx=-10,
-		lock_dy=-35;
+		lock_dy=-33;
 	
+	self.freeLocks = function () {
+		self.getSvg().selectAll("g.leaf").each(function (d) { d.leaf.locked=false; });
+		self.getSvg().selectAll ("g.leaf image").remove();
+	}
 	
 	self.clickLeaf = function (d,i) {
 		if (d.functional) {
@@ -43,7 +47,7 @@ require(["DrillProvider"], function (DrillProvider) {
 	}
 	
 	self.generateRandomLeaves = function (){
-		var myRndLeaves= drillProvider.getFormattedDrill(drillProvider.getRandomLeaves());
+		var myRndLeaves= drillProvider.getFormattedDrill(drillProvider.getRandomDrills()[0]);
 	    
 		self.current_x=default_x;
 		self.current_y=default_y;
@@ -81,7 +85,7 @@ require(["DrillProvider"], function (DrillProvider) {
 	}
 	
 	self.updateRandomLeaves = function (){
-	    var myRndLeaves= drillProvider.getFormattedDrill(drillProvider.getRandomLeaves());
+	    var myRndLeaves= drillProvider.getFormattedDrill(drillProvider.getRandomDrills()[0]);
 	    
 	    self.current_x=default_x;
 		self.current_y=default_y;
@@ -126,6 +130,10 @@ require(["DrillProvider"], function (DrillProvider) {
 	    
 	    myNewLeaves.exit().remove();
 	}
+	
+	$("#lock_free").click(function () {
+		self.freeLocks();
+	});
 	
 	$("#reload").click(function () {
 		self.updateRandomLeaves();

@@ -1,26 +1,30 @@
 define('DrillProvider', function() {
-	var _branches;
+	var _branches=[], _drill_count=1;
 
 
 	/**
 	 * 
 	 */
-	DrillProvider = function () {
+	DrillProvider = function (drill_count) {
+		if (drill_count)
+			_drill_count = drill_count;
 	};
 	
 	/**
 	 * 
 	 */
 	DrillProvider.prototype.setBranches = function (branches) {
-		_branches = branches;
 		
-		
-		//We put the parent at the leaf level
-		for (var i=0;i<_branches.length;i++) {
-			var myBranch = _branches[i];
-			if (myBranch.leaves) {
-				for (var j=0;j<myBranch.leaves.length;j++)
-					myBranch.leaves[j].parent = myBranch;
+		for (var i=0;i<_drill_count;i++) {
+			_branches.push(branches);
+	
+			//We put the parent at the leaf level
+			for (var j=0;j<_branches[i].length;j++) {
+				var myBranch = _branches[i][j];
+				if (myBranch.leaves) {
+					for (var k=0;k<myBranch.leaves.length;k++)
+						myBranch.leaves[k].parent = myBranch;
+				}
 			}
 		}
 	}
@@ -80,18 +84,26 @@ define('DrillProvider', function() {
 	/**
 	 * 
 	 */
-	DrillProvider.prototype.getRandomLeaves = function () {
-		var myLeaves;
+	DrillProvider.prototype.getRandomDrills = function (fixed_index) {
+		var myResult = [];
+		
+		var start = fixed_index?fixed_index:0,
+			stop = fixed_index?fixed_index+1:_drill_count;
 
-		do {
-			myLeaves = [];
-			for (var i=0; i<_branches.length; i++) 
-				myLeaves.push (this.getRandomLeaf(_branches[i]));
-		} while (!this.isDrillConsistent(myLeaves));
+		for (var i=start;i<stop;i++) {
+			var myLeaves;
+			do {
+				myLeaves = [];
+				for (var j=0; j<_branches[i].length; j++) 
+					myLeaves.push (this.getRandomLeaf(_branches[i][j]));
+			} while (!this.isDrillConsistent(myLeaves));
+			myResult.push(myLeaves);
+		}
 			
-		return myLeaves;
+		return myResult;
 	};
 	
+		
 	/**
 	 * 
 	 */

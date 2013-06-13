@@ -7,6 +7,7 @@ var express = require('express')
   , model = require('./model')
   , default_route = require('./routes/default')
   , daily_route = require('./routes/daily')
+  , weekly_route = require('./routes/weekly')
   , http = require('http')
   , path = require('path');
 
@@ -25,9 +26,11 @@ app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
+  app.locals.pretty = true;
 }
 
 app.get('/',function (req, res) {
@@ -39,7 +42,7 @@ app.get('/daily',function (req, res) {
 });
 
 app.get('/weekly',function (req, res) {
-	default_route.defaultGet(req, res, 'weekly');
+	weekly_route.weeklyGet(req, res, 'weekly');
 });
 
 app.get('/settings',function (req, res) {
