@@ -4,9 +4,17 @@ html
 	title= 'The Daily Drawing Drill'
 	link(rel='stylesheet', href='/stylesheets/style.css')
 	script(src='/javascripts/libs/jquery/jquery-1.10.1.min.js')
+	script(src='/javascripts/libs/underscore/underscore-1.3.3.js')
 	script(src='/javascripts/libs/d3/d3.v3.min.js')
+	script(src='/javascripts/google_analytics.js')
+	
 	block head
 	body
 		#content-container
+			#menu-container
+				block menu
+				include menu.jade
 			#page-content
 				block content
+			#footer
+				img(src='/images/copyright.png')

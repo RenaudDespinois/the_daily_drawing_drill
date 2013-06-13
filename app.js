@@ -5,17 +5,19 @@
 
 var express = require('express')
   , model = require('./model')
-  , index_route = require('./routes/index')
+  , default_route = require('./routes/default')
+  , daily_route = require('./routes/daily')
   , http = require('http')
   , path = require('path');
 
 var app = express();
 
 // all environments
+app.use(express.favicon(__dirname +'/public/images/favicon.png', { maxAge: 2592000000 }));
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(express.favicon());
+
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -29,7 +31,27 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/',function (req, res) {
-	index_route.indexGet(req, res);
+	default_route.defaultGet(req, res, 'home');
+});
+
+app.get('/daily',function (req, res) {
+	daily_route.dailyGet(req, res);
+});
+
+app.get('/weekly',function (req, res) {
+	default_route.defaultGet(req, res, 'weekly');
+});
+
+app.get('/settings',function (req, res) {
+	default_route.defaultGet(req, res, 'settings');
+});
+
+app.get('/about',function (req, res) {
+	default_route.defaultGet(req, res, 'about');
+});
+
+app.get('/donate',function (req, res) {
+	default_route.defaultGet(req, res, 'donate');
 });
 
 http.createServer(app).listen(app.get('port'), function(){

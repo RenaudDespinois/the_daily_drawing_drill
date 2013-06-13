@@ -1,11 +1,11 @@
 define('DrillProvider', function() {
 	var _branches;
 
+
 	/**
 	 * 
 	 */
-	DrillProvider = function (branches) {
-		_branches = branches;
+	DrillProvider = function () {
 	};
 	
 	/**
@@ -13,6 +13,16 @@ define('DrillProvider', function() {
 	 */
 	DrillProvider.prototype.setBranches = function (branches) {
 		_branches = branches;
+		
+		
+		//We put the parent at the leaf level
+		for (var i=0;i<_branches.length;i++) {
+			var myBranch = _branches[i];
+			if (myBranch.leaves) {
+				for (var j=0;j<myBranch.leaves.length;j++)
+					myBranch.leaves[j].parent = myBranch;
+			}
+		}
 	}
 	
 	/**
@@ -45,33 +55,79 @@ define('DrillProvider', function() {
 		return myLeaf;
 	};
 	
+	/**
+	 * 
+	 */
+	DrillProvider.prototype.isDrillConsistent = function (aLeaves) {
+		var ids=[], excludes=[];
+		
+		// We go through all the leaves and get ids and excludes
+		aLeaves.forEach (function (d) {
+			ids.push(d._id);
+			if (d.excludes) {
+				excludes = excludes.concat(d.excludes);
+			}
+		})
+		
+		//Then we get the intersection
+		var intersect = _.intersection(ids, _.uniq(excludes));
+		
+		
+		return !intersect || !intersect.length;
+	};
+	
 	
 	/**
 	 * 
 	 */
 	DrillProvider.prototype.getRandomLeaves = function () {
-		var myLeaves = [];
-		var myExcludes = [];
-		
-		for (var i=0; i<_branches.length; i++) {
-			var myLeaf;
-			do {
-				myLeaf = this.getRandomLeaf(_branches[i]);
-			} while (myExcludes.indexOf(myLeaf._id)!=-1);
-			
-			/*
-			 * We format the leaf name
-			 */
-			myLeaf.resultStr = _branches[i].name;
-			for (var j=0; j<(20-_branches[i].name.length);j++)
-				myLeaf.resultStr += ".";
-			myLeaf.parent = _branches[i];
-			myLeaf.resultStr += " "+myLeaf.name;
-			myLeaves.push (myLeaf);
-			myExcludes = myExcludes.concat (myLeaf.excludes);
-		}
+		var myLeaves;
+
+		do {
+			myLeaves = [];
+			for (var i=0; i<_branches.length; i++) 
+				myLeaves.push (this.getRandomLeaf(_branches[i]));
+		} while (!this.isDrillConsistent(myLeaves));
 			
 		return myLeaves;
+	};
+	
+	/**
+	 * 
+	 */
+	DrillProvider.prototype.getFormattedDrill = function (aLeaves) {
+		var myResult = [];
+		
+		for (var i=0; i<aLeaves.length; i++) {
+			var myLeaf = aLeaves[i];
+			
+			//First we push the parent prefix
+			if (myLeaf.parent.prefix && myLeaf.parent.prefix.length>0) {
+				myResult.push({
+								text: myLeaf.parent.prefix,
+								functional: false,
+								leaf: myLeaf
+							  });
+			}
+			
+			//Then we push the leaf text
+			myResult.push({
+							text: myLeaf.display?myLeaf.display:myLeaf.name,
+							functional: true,
+							leaf: myLeaf
+			});
+			
+			//Then we push the parent suffix
+			if (myLeaf.parent.suffix && myLeaf.parent.suffix.length>0) {
+				myResult.push({
+								text: myLeaf.parent.suffix,
+								functional: false,
+								leaf: myLeaf
+				  });
+			}
+		}
+			
+		return myResult;
 	};
 	
 	return DrillProvider;

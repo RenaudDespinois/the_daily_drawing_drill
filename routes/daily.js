@@ -1,12 +1,12 @@
 /**
- * GET Homepage
+ * GET Daily page
  */
 
 var	mongoose = require('mongoose'),
 	Trunk = mongoose.model('Trunk'),
 	Branch = mongoose.model('Branch');
 
-exports.indexGet = function(req, res){
+exports.dailyGet = function(req, res){
 	Trunk.find({
 				name: 'Main'
 				}, 
@@ -21,13 +21,13 @@ exports.indexGet = function(req, res){
 										},
 										function (err2, mybranches) {
 											if (mybranches && mybranches.length) {
-												res.render('index', { branches: JSON.stringify(mybranches)});
+												res.render('daily', { branches: JSON.stringify(mybranches)});
 											} else {
-												res.render('index', { title: 'ERROR' });
+												res.render('error', { message: 'A Mongoose error has occured.' });
 											} 
 										})
 					} else {
-							res.render('index', { title: 'ERROR' });
+							res.render('error', { message: 'A Mongoose error has occured.' });
 					} 
 				})
 };

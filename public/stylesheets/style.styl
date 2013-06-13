@@ -12,22 +12,65 @@ background-color = #f4f4f4
 
 body
   font-family 'Finger Paint'
-  font-size 20px
+  font-size 14px
+  font-weight normal
+  text-rendering optimizeLegibility
   margin auto
   margin-top 0
+  padding 0
   background-color background-color
   color main-ink-color
   height 100%
 
-#content-container
+html
+  height 100%
+  
+#menu-container
+  width 80px
   display block
+  margin 0
+  padding 0
+  position relative
+  left 180px
+  top 150px
+  
+#page-content
+  overflow hidden
+  display block
+  margin 0
+  padding 0
+  position relative
+  left 300px
+  top -380px
+  width 520px
+
+#content-container
+  overflow hidden
   width 1000px
-  height 1200px
+  height 100%
   margin auto
   margin-top 0px
-  padding-top 0px
+  padding 0px
   background #fff url(../images/bg.png) no-repeat
-    
+  
+#footer
+  display inline
+  position absolute
+  bottom 0
+  right 0
+
+.clickable:hover
+  cursor pointer
+  
+.active
+  background url(../images/menu_active.png)
+  background-repeat no-repeat
+  background-position 10px 68px
+  
+
+.leaf
+  fill #455ba1
+      
 .leaf:hover
   fill #ec6162
   cursor pointer
@@ -35,13 +78,13 @@ body
 
 a#reload
   display block
-  position relative
+  position absolute
   background  url(../images/reload.png)
   background-repeat no-repeat
   width 52px
   height 58px
-  left 720px
-  top 420px
+  left 440px
+  top 240px
   
 a#reload:hover
   background  url(../images/reload_hover.png)
@@ -49,3 +92,28 @@ a#reload:hover
   
 a#reload:active
   background  url(../images/reload_click.png)
+  
+h1
+  color #455ba1
+  font-weight normal
+  font-size 26px
+  padding-bottom 20px
+  
+#paypal_form
+  width 50%
+  margin 30px 100px 0px auto
+  
+.to_come
+  color #455ba1
+  font-style italic
+  
+#mailto
+  display inline
+  position absolute
+  padding 0
+  margin 0
+  margin-left 10px
+  
+.signature
+  float right
+  

@@ -1,0 +1,14 @@
+extends layout
+
+block head
+	script(src='/javascripts/libs/require/require.js',type="text/javascript",charset="utf-8",data-main='/javascripts/daily')
+	
+block menu
+	- var ref_page='daily'
+
+block content
+	h1 Daily drill
+	input(type='hidden',id='branches',value=branches)
+	p Here's the drill:
+	#svg-container
+	a#reload
