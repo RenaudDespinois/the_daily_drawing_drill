@@ -157,6 +157,10 @@ require(["DrillProvider"], function (DrillProvider) {
 	
 	$("#reload").click(function () {
 		self.updateRandomLeaves(false);
+		current_day=0;
+		d3.select("#previous").style("display", "none");
+		self.getSvg().selectAll("g.container").transition().attr("transform", function (d,i) { return "translate("+((i-current_day)*offscreen_decal_x)+" 0)";});
+
 	});
 	
 	$("#reload_day").click(function () {

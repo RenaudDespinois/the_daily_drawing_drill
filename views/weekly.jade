@@ -1,6 +1,11 @@
 extends layout
 
 block head
+	meta(name='description', value='The Daily Drawing Drill: generate a a whole week of exercises! Lock the features you would like to keep and generate an infinite number of combination using styles, techniques, ambiance...')
+	meta(name='title', value='The Daily Drawing Drill: Weekly drill')
+	script(src='/javascripts/libs/jquery/jquery-1.10.1.min.js')
+	script(src='/javascripts/libs/underscore/underscore-1.3.3.js')
+	script(src='/javascripts/libs/d3/d3.v3.min.js')
 	script(src='/javascripts/libs/require/require.js',type="text/javascript",charset="utf-8",data-main='/javascripts/weekly')
 	
 block menu
