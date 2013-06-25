@@ -72,7 +72,7 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 				
 				var step = d.functional?(myText.length*1.7+4):(myText.length*1.58+4);
 				
-	    		if (self.current_x+step>180) {
+	    		if (self.current_x+step>160) {
 	    			self.current_x=20;
 		    		self.current_y+=6;
 	    		} else {
@@ -86,7 +86,7 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 					
 					var step = myHint.length*1.55;
 					
-		    		if (self.current_x+step>180) {
+		    		if (self.current_x+step>160) {
 		    			self.current_x=20;
 			    		self.current_y+=6;
 		    		} else {
