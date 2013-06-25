@@ -3,10 +3,19 @@ extends layout
 block head
 	meta(name='description', value='The Daily Drawing Drill: adjust how the drills are generated, modify the weight of each possible feature and adapt the tool at your needs!')
 	meta(name='title', value='The Daily Drawing Drill: Settings')
-	
+	script(src='/javascripts/libs/jquery/jquery-1.10.1.min.js')
+	script(src='/javascripts/libs/jquery/jquery_cookie.js')
+	script(src='/javascripts/libs/underscore/underscore-1.3.3.js')
+	script(src='/javascripts/libs/d3/d3.v3.min.js')
+	script(src='/javascripts/libs/require/require.js',type="text/javascript",charset="utf-8",data-main='/javascripts/settings')
+		
 block menu
 	- var ref_page='settings'
 
 block content
 	h1 Settings
-	p Under construction... 
+	p	Here it's where you can adjust the probabilities of all the available items. You can save your configuration at any time or go back to the defaults if you prefer.
+	input(type='hidden',id='branches',value=branches)
+	#svg-container
+	img.clickable(id='save_cookie', src='/images/cookie.png', title='Save to cookie', width='31px', height='47px', onmouseover='this.src="/images/cookie_hover.png"', onmouseout='this.src="/images/cookie.png"'))
+	img.clickable(id='default', src='/images/default.png', title='Reset to defaults', width='32px', height='31px', onmouseover='this.src="/images/default_hover.png"', onmouseout='this.src="/images/default.png"'))

@@ -8,6 +8,7 @@ var express = require('express')
   , default_route = require('./routes/default')
   , daily_route = require('./routes/daily')
   , weekly_route = require('./routes/weekly')
+  , settings_route = require('./routes/settings')
   , http = require('http')
   , path = require('path');
 
@@ -42,11 +43,11 @@ app.get('/daily',function (req, res) {
 });
 
 app.get('/weekly',function (req, res) {
-	weekly_route.weeklyGet(req, res, 'weekly');
+	weekly_route.weeklyGet(req, res);
 });
 
 app.get('/settings',function (req, res) {
-	default_route.defaultGet(req, res, 'settings');
+	settings_route.settingsGet(req, res);
 });
 
 app.get('/about',function (req, res) {

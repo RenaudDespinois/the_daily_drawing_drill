@@ -1,9 +1,11 @@
 define('DrillProvider', function() {
-	var _branches=[], _drill_count=1;
+	var _branches=[], 
+		_drill_count=1,
+		_max_drills_iteration=5;
 
 
 	/**
-	 * 
+	 * Constructor
 	 */
 	DrillProvider = function (drill_count) {
 		if (drill_count)
@@ -11,7 +13,7 @@ define('DrillProvider', function() {
 	};
 	
 	/**
-	 * 
+	 * Setter for the branches
 	 */
 	DrillProvider.prototype.setBranches = function (branches) {
 		
@@ -30,10 +32,32 @@ define('DrillProvider', function() {
 	}
 	
 	/**
-	 * 
+	 * Function that randomly choose one item from a collection of weighted items (need the 'weight' attribute)
+	 */
+	DrillProvider.prototype.getRandomWeightedItem = function (aCollection) {
+		var myItem,myTotalWeight = 0;
+		
+		for (var i=0; i<aCollection.length; i++)
+			myTotalWeight += aCollection[i].weight;	
+		 
+		var myThresh = Math.floor(Math.random()*myTotalWeight);
+		
+		
+		for (var i=0;i<aCollection.length; i++) {
+			myThresh -= aCollection[i].weight;
+		    if ( myThresh < 0 ) {
+		    	myItem =  aCollection[i];
+		        break;
+		    }
+		}
+		return myItem;
+	}
+	
+	/**
+	 * Get a random leaf from the branch
 	 */
 	DrillProvider.prototype.getRandomLeaf = function (aBranch) {
-		var myLeaf, myTotalWeight = 0;
+		var myLeaf;
 		
 		//First we check if the leaf is locked
 		var myLockedBranch = $.grep(aBranch.leaves, function (d) { return d.locked });
@@ -41,18 +65,10 @@ define('DrillProvider', function() {
 		if (myLockedBranch && myLockedBranch.length>0) {
 			myLeaf = myLockedBranch[0];
 		} else {
-			for (var i=0; i<aBranch.leaves.length; i++)
-				myTotalWeight += aBranch.leaves[i].weight;	
-			 
-			var myThresh = Math.floor(Math.random()*myTotalWeight);
+			myLeaf = this.getRandomWeightedItem (aBranch.leaves);
 			
-			
-			for (var i=0;i<aBranch.leaves.length; i++) {
-				myThresh -= aBranch.leaves[i].weight;
-			    if ( myThresh < 0 ) {
-			    	myLeaf =  aBranch.leaves[i];
-			        break;
-			    }
+			if (myLeaf.subleaves && myLeaf.subleaves.length>0) {
+				myLeaf.suggested_subleaf = this.getRandomWeightedItem (myLeaf.subleaves);
 			}
 		}
 		
@@ -60,7 +76,7 @@ define('DrillProvider', function() {
 	};
 	
 	/**
-	 * 
+	 * Tells if a drill is consistent, ie if a collection of leaves respects the excludes of each leaf
 	 */
 	DrillProvider.prototype.isDrillConsistent = function (aLeaves) {
 		var ids=[], excludes=[];
@@ -82,30 +98,53 @@ define('DrillProvider', function() {
 	
 	
 	/**
-	 * 
+	 * Generate one or various drills
 	 */
 	DrillProvider.prototype.getRandomDrills = function (fixed_index) {
 		var myResult = [];
 		
-		var start = fixed_index?fixed_index:0,
-			stop = fixed_index?fixed_index+1:_drill_count;
+		var start = !(typeof fixed_index == 'undefined' || fixed_index===null)?fixed_index:0,
+			stop = !(typeof fixed_index == 'undefined' || fixed_index===null)?fixed_index+1:_drill_count;
 
 		for (var i=start;i<stop;i++) {
-			var myLeaves;
+			var currentThreshold=0, currentIteration=0;
 			do {
-				myLeaves = [];
-				for (var j=0; j<_branches[i].length; j++) 
-					myLeaves.push (this.getRandomLeaf(_branches[i][j]));
-			} while (!this.isDrillConsistent(myLeaves));
+				currentIteration++;
+				var myLeaves;
+				do {
+					myLeaves = [];
+					for (var j=0; j<_branches[i].length; j++) 
+						myLeaves.push (this.getRandomLeaf(_branches[i][j]));
+				} while (!this.isDrillConsistent(myLeaves));
+				
+			} while (!this.isDistanceAcceptable(myResult, myLeaves, currentThreshold) && ((currentIteration<=_max_drills_iteration) || ((currentIteration=0) || ++currentThreshold)))
 			myResult.push(myLeaves);
 		}
 			
 		return myResult;
 	};
 	
+	
+	
+	/**
+	 * Function that indicates if the differences between a drill and a set of past drills is enough to consider it "different"
+	 */
+	DrillProvider.prototype.isDistanceAcceptable = function (pastResult, currentResult, threshold) {
+		// We go through all the results and get ids 
+		var ids = [], currentIds = [];
+		for (var i=0;i<pastResult.length;i++)	
+			pastResult[i].forEach (function (d) { ids.push(d._id);});
+		currentResult.forEach (function (d) { currentIds.push(d._id);});
+		
+		//Then we get the intersection
+		var intersect = _.intersection(_.uniq(ids), _.uniq(currentIds));
+		
+		return (!intersect || intersect.length<=threshold);
+	}
+	
 		
 	/**
-	 * 
+	 * Formats a drill for display
 	 */
 	DrillProvider.prototype.getFormattedDrill = function (aLeaves) {
 		var myResult = [];

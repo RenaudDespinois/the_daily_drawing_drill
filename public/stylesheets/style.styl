@@ -9,22 +9,48 @@
  */
 main-ink-color = #000000
 background-color = #f4f4f4
+blue-ink-color = #455ba1
+red-ink-color =  #e06284
+buttons-top = 26px
 
+
+/*
+ * Common html elements and main styling
+ */
 body
   font-family 'Finger Paint'
-  font-size 14px
+  font-size 12px
   font-weight normal
   text-rendering optimizeLegibility
   margin auto
   margin-top 0
   padding 0
   background-color background-color
-  color main-ink-color
+  color black
   height 100%
 
 html
   height 100%
   
+h1
+  color red-ink-color
+  font-weight normal
+  font-size 26px
+  padding-bottom 12px
+  
+a:link, a:visited
+  color blue-ink-color
+  text-decoration none
+  
+a:hover
+  color red-ink-color
+  
+.signature
+  float right
+  
+/*
+ * Main layout
+ */ 
 #menu-container
   width 80px
   display block
@@ -58,6 +84,22 @@ html
   position absolute
   bottom 0
   right 0
+  
+#paypal_form
+  width 50%
+  margin 30px 100px 0px auto
+  
+ 
+#mailto
+  display inline
+  position absolute
+  padding 0
+  margin 0
+  margin-left 10px
+
+/*
+ * Left menu
+ */
 
 .clickable:hover
   cursor pointer
@@ -67,32 +109,61 @@ html
   background-repeat no-repeat
   background-position 10px 68px
   
+/*
+ * Drills: Daily and Weekly
+ */
 
-.leaf
-  fill #455ba1
+.leaf_text
+  fill blue-ink-color
       
-.leaf:hover
-  fill #e06284
+.leaf_text:hover
+  fill red-ink-color
   cursor pointer
-
+  
+.day
+  font-weight normal
+  font-size 20px
+  
+/*
+ * Buttons
+ */
+ 
 #reload_day
   display block
   position absolute
-  left 403px
-  top 22px
+  left 354px
+  top buttons-top px
   
 #reload
   display block
   position absolute
+  left 403px
+  top buttons-top px
+ 
+
+#save_cookie
+  display block
+  position absolute
   left 448px
-  top 22px
+  top -(buttons-top - 36) px 
   
+#default
+  display block
+  position absolute
+  left 398px
+  top buttons-top px 
 
 #lock_free
   display block
   position absolute
-  left 488px
-  top 22px
+  left 448px
+  top -(buttons-top - 50) px
+  
+#export
+  display block
+  position absolute
+  left 492px
+  top -(buttons-top - 50) px
   
 #previous
   display none
@@ -105,33 +176,31 @@ html
   position absolute
   left 385px
   top 92px
+ 
 
   
-h1
-  color #e06284
-  font-weight normal
-  font-size 26px
-  padding-bottom 20px
+/*
+ * Settings section
+ */
   
-.day
-  font-weight normal
-  font-size 20px
+.slider:hover
+  cursor pointer
   
-#paypal_form
-  width 50%
-  margin 30px 100px 0px auto
+.invisible
+  display none
+  fill-opacity 0
+  stroke-width 0px
+
+.leaf_name
+  font-size 10px
+  margin-bottom .3em
   
-.to_come
-  color #e06284
-  font-style italic
+.inactive_title
+  fill blue-ink-color
   
-#mailto
-  display inline
-  position absolute
-  padding 0
-  margin 0
-  margin-left 10px
+.inactive_title:hover
+	fill red-ink-color
+	cursor pointer
   
-.signature
-  float right
-  
+.active_title
+  fill black

@@ -6,9 +6,12 @@
  * Store the main color and
  * background color as variables
  */
+/*
+ * Common html elements and main styling
+ */
 body {
   font-family: 'Finger Paint';
-  font-size: 14px;
+  font-size: 12px;
   font-weight: normal;
   text-rendering: optimizeLegibility;
   margin: auto;
@@ -21,6 +24,26 @@ body {
 html {
   height: 100%;
 }
+h1 {
+  color: #e06284;
+  font-weight: normal;
+  font-size: 26px;
+  padding-bottom: 12px;
+}
+a:link,
+a:visited {
+  color: #455ba1;
+  text-decoration: none;
+}
+a:hover {
+  color: #e06284;
+}
+.signature {
+  float: right;
+}
+/*
+ * Main layout
+ */
 #menu-container {
   width: 80px;
   display: block;
@@ -55,6 +78,20 @@ html {
   bottom: 0;
   right: 0;
 }
+#paypal_form {
+  width: 50%;
+  margin: 30px 100px 0px auto;
+}
+#mailto {
+  display: inline;
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  margin-left: 10px;
+}
+/*
+ * Left menu
+ */
 .clickable:hover {
   cursor: pointer;
 }
@@ -63,30 +100,58 @@ html {
   background-repeat: no-repeat;
   background-position: 10px 68px;
 }
-.leaf {
+/*
+ * Drills: Daily and Weekly
+ */
+.leaf_text {
   fill: #455ba1;
 }
-.leaf:hover {
+.leaf_text:hover {
   fill: #e06284;
   cursor: pointer;
 }
+.day {
+  font-weight: normal;
+  font-size: 20px;
+}
+/*
+ * Buttons
+ */
 #reload_day {
   display: block;
   position: absolute;
-  left: 403px;
-  top: 22px;
+  left: 354px;
+  top: 26px;
 }
 #reload {
   display: block;
   position: absolute;
+  left: 403px;
+  top: 26px;
+}
+#save_cookie {
+  display: block;
+  position: absolute;
   left: 448px;
-  top: 22px;
+  top: 10px;
+}
+#default {
+  display: block;
+  position: absolute;
+  left: 398px;
+  top: 26px;
 }
 #lock_free {
   display: block;
   position: absolute;
-  left: 488px;
-  top: 22px;
+  left: 448px;
+  top: 24px;
+}
+#export {
+  display: block;
+  position: absolute;
+  left: 492px;
+  top: 24px;
 }
 #previous {
   display: none;
@@ -100,31 +165,28 @@ html {
   left: 385px;
   top: 92px;
 }
-h1 {
-  color: #e06284;
-  font-weight: normal;
-  font-size: 26px;
-  padding-bottom: 20px;
+/*
+ * Settings section
+ */
+.slider:hover {
+  cursor: pointer;
 }
-.day {
-  font-weight: normal;
-  font-size: 20px;
+.invisible {
+  display: none;
+  fill-opacity: 0;
+  stroke-width: 0px;
 }
-#paypal_form {
-  width: 50%;
-  margin: 30px 100px 0px auto;
+.leaf_name {
+  font-size: 10px;
+  margin-bottom: 0.3em;
 }
-.to_come {
-  color: #e06284;
-  font-style: italic;
+.inactive_title {
+  fill: #455ba1;
 }
-#mailto {
-  display: inline;
-  position: absolute;
-  padding: 0;
-  margin: 0;
-  margin-left: 10px;
+.inactive_title:hover {
+  fill: #e06284;
+  cursor: pointer;
 }
-.signature {
-  float: right;
+.active_title {
+  fill: #000;
 }
