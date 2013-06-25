@@ -97,7 +97,7 @@ require(["TrunkManager"], function (TrunkManager) {
         self.getSvg().selectAll("g.legend").sort(function (a,b) { return b.pct-a.pct})
 		.transition()
 		.duration (200)
-		.attr("transform", function (d,i) "translate(0,"+(i*25)+")");
+		.attr("transform", function (d,i) { return "translate(0,"+(i*25)+")"});
         
         return false;
 	}
@@ -310,7 +310,7 @@ require(["TrunkManager"], function (TrunkManager) {
 		.append("g")
 		.sort(function (a,b) { return b.pct-a.pct})
 		.attr("class", "legend")
-		.attr("transform", function (d,i) "translate(0,"+(i*25)+")");
+		.attr("transform", function (d,i) { return "translate(0,"+(i*25)+")"});
 		
 		
 		legends.append("text")

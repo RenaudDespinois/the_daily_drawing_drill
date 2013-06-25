@@ -138,7 +138,7 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 	    .attr("width", 18)
 	    .attr("height", 25)
 	    .attr("x", function (d) { 
-	    	return this.parentNode.children[0].getBBox().width+d.x+bulb_dx;
+	    	return this.parentNode.childNodes[0].getBBox().width+d.x+bulb_dx;
 	    	})
 	    .attr("y", function (d) { return d.y+bulb_dy})
 	    .on ("mouseover", function (d) { 
@@ -197,7 +197,7 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
   			})
 	    .transition()
 	    .attr("x", function (d) { 
-	    	return this.parentNode.children[0].getBBox().width+d.x+bulb_dx;
+	    	return this.parentNode.childNodes[0].getBBox().width+d.x+bulb_dx;
 	    	})
 	    .attr("y", function (d) { return d.y+bulb_dy});
   		
