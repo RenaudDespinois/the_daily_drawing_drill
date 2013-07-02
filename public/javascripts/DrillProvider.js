@@ -31,7 +31,7 @@ define('DrillProvider', function() {
 	DrillProvider.prototype.setBranches = function (branches) {
 		
 		for (var i=0;i<_drill_count;i++) {
-			_branches.push(branches);
+			_branches.push(_.cloneDeep(branches));
 	
 			//We put the parent at the leaf level
 			for (var j=0;j<_branches[i].length;j++) {
@@ -126,7 +126,7 @@ define('DrillProvider', function() {
 			var currentThreshold=0, currentIteration=0;
 			do {
 				currentIteration++;
-				var myLeaves;
+				var myLeaves=null;
 				do {
 					myLeaves = [];
 					for (var j=0; j<_branches[i].length; j++) 

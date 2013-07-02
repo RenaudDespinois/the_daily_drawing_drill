@@ -364,7 +364,7 @@ require(["TrunkManager"], function (TrunkManager) {
 		.attr("font-size", function (d,i) {return (i===self.current_branch)?28:12})
 		.attr("x",0)
 		.attr("y", function (d,i) {
-			return 8+18*(i-self.current_branch)-(i<self.current_branch?10:0);
+			return 8+18*(i-self.current_branch)-(i<self.current_branch?12:0);
 		})
 		.attr("text-anchor", "middle")
 		.text(function (d) { 
@@ -380,7 +380,7 @@ require(["TrunkManager"], function (TrunkManager) {
 			.duration(200)
 			.attr("font-size", function (g,j) {return (j===self.current_branch)?28:12})
 			.attr("y", function (g,j) {
-				return 8+18*(j-self.current_branch)-(j<self.current_branch?10:0);
+				return 8+18*(j-self.current_branch)-(j<self.current_branch?12:0);
 			})
 			
 			self.getSvg().selectAll("g.donotshow").remove();
