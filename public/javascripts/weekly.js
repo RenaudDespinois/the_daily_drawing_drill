@@ -313,7 +313,7 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 	 * Reload the whole week and regenerate the drills
 	 */
 	self.reload = function () {
-		self.freeLocks();
+		//self.freeLocks();
 		self.updateRandomLeaves(false);
 		current_day=0;
 		d3.select("#previous").style("display", "none");
