@@ -1,0 +1,13 @@
+case locale
+	when 'us'
+		img.clickable(src='/images/lang_us_hover.png',  width='18px', height='17px', onmouseover='this.src="/images/lang_us_hover.png"', onmouseout='this.src="/images/lang_us_hover.png"')
+		img.clickable(src='/images/lang_es.png', width='18px', height='17px', onclick='setLocale("es")', onmouseover='this.src="/images/lang_es_hover.png"', onmouseout='this.src="/images/lang_es.png"')
+		img.clickable(src='/images/lang_fr.png', width='18px', height='17px', onclick='setLocale("fr")', onmouseover='this.src="/images/lang_fr_hover.png"', onmouseout='this.src="/images/lang_fr.png"')
+	when 'es'
+		img.clickable(src='/images/lang_us.png', width='18px', height='17px', onclick='setLocale("us")', onmouseover='this.src="/images/lang_us_hover.png"', onmouseout='this.src="/images/lang_us.png"')
+		img.clickable(src='/images/lang_es_hover.png', width='18px', height='17px', onmouseover='this.src="/images/lang_es_hover.png"', onmouseout='this.src="/images/lang_es_hover.png"')
+		img.clickable(src='/images/lang_fr.png',width='18px', height='17px', onclick='setLocale("fr")', onmouseover='this.src="/images/lang_fr_hover.png"', onmouseout='this.src="/images/lang_fr.png"')
+	when 'fr'
+		img.clickable(src='/images/lang_us.png',width='18px', height='17px', onclick='setLocale("us")', onmouseover='this.src="/images/lang_us_hover.png"', onmouseout='this.src="/images/lang_us.png"')
+		img.clickable(src='/images/lang_es.png',  width='18px', height='17px', onclick='setLocale("es")', onmouseover='this.src="/images/lang_es_hover.png"', onmouseout='this.src="/images/lang_es.png"')
+		img.clickable(src='/images/lang_fr_hover.png',width='18px', height='17px', onmouseover='this.src="/images/lang_fr_hover.png"', onmouseout='this.src="/images/lang_fr_hover.png"')

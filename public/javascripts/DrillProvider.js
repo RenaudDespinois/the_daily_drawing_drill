@@ -1,7 +1,8 @@
 define('DrillProvider', function() {
 	var _branches=[], 
 		_drill_count=1,
-		_max_drills_iteration=5;
+		_max_drills_iteration=5,
+		_lang='us';
 
 
 	/**
@@ -10,7 +11,19 @@ define('DrillProvider', function() {
 	DrillProvider = function (drill_count) {
 		if (drill_count)
 			_drill_count = drill_count;
+		
+		var language = $.cookie ('tddd_lang');
+		if (language) 
+			_lang = language;
 	};
+	
+	/**
+	 * Getter for the language
+	 */
+	DrillProvider.prototype.getLang = function () {
+		return _lang;
+	}
+	
 	
 	/**
 	 * Setter for the branches
@@ -69,6 +82,9 @@ define('DrillProvider', function() {
 			
 			if (myLeaf.subleaves && myLeaf.subleaves.length>0) {
 				myLeaf.suggested_subleaf = this.getRandomWeightedItem (myLeaf.subleaves);
+				if (myLeaf.suggested_subleaf.display_lcl) {
+					myLeaf.suggested_subleaf.display = myLeaf.suggested_subleaf.display_lcl[_lang];
+				}
 			}
 		}
 		
@@ -149,33 +165,65 @@ define('DrillProvider', function() {
 	DrillProvider.prototype.getFormattedDrill = function (aLeaves) {
 		var myResult = [];
 		
-		for (var i=0; i<aLeaves.length; i++) {
-			var myLeaf = aLeaves[i];
+		var myFilteredLeaves = $.grep(aLeaves, function (d) { return !d.parent.donotshow });
+		
+		for (var i=0; i<myFilteredLeaves.length; i++) {
+			var myLeaf = myFilteredLeaves[i];
+			
+			var prefix=null;
+			if (myLeaf.parent.prefix_lcl)
+				prefix = myLeaf.parent.prefix_lcl[_lang];
+			else if (myLeaf.parent.prefix)
+				prefix = myLeaf.parent.prefix;
+				
 			
 			//First we push the parent prefix
-			if (myLeaf.parent.prefix && myLeaf.parent.prefix.length>0) {
+			if (prefix) {
 				myResult.push({
-								text: myLeaf.parent.prefix,
+								text: prefix,
 								functional: false,
 								leaf: myLeaf
 							  });
 			}
 			
+			var name=null;
+			if (myLeaf.display_lcl)
+				name = myLeaf.display_lcl[_lang];
+			else if (myLeaf.display)
+				name = myLeaf.display;
+			else if (myLeaf.name_lcl)
+				name = myLeaf.name_lcl[_lang];
+			else
+				name = myLeaf.name;
+			
 			//Then we push the leaf text
 			myResult.push({
-							text: myLeaf.display?myLeaf.display:myLeaf.name,
+							text: name,
 							functional: true,
 							leaf: myLeaf
 			});
 			
+			var suffix=null;
+			if (myLeaf.parent.suffix_lcl)
+				suffix = myLeaf.parent.suffix_lcl[_lang];
+			else if (myLeaf.parent.suffix)
+				suffix = myLeaf.parent.suffix;
+			
 			//Then we push the parent suffix
-			if (myLeaf.parent.suffix && myLeaf.parent.suffix.length>0) {
+			if (suffix) {
 				myResult.push({
-								text: myLeaf.parent.suffix,
+								text: suffix,
 								functional: false,
 								leaf: myLeaf
 				  });
 			}
+			
+			if (i==myFilteredLeaves.length-1) {
+				myResult[myResult.length-1].text += ".";
+			} else if (i!=0){
+				myResult[myResult.length-1].text += ", ";
+			}
+				
 		}
 			
 		return myResult;

@@ -9,13 +9,17 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 		svg_height=200,
 		default_x=20,
 		default_y=61,
-		max_width=335,
+		max_width=310,
 		line_spacing=35,
 		lock_dx=-10,
 		lock_dy=-33,
 		bulb_dx=-4,
 		bulb_dy=-30,
-		days_of_week = ['Monday','Tuesday','Wednesday', 'Thursday','Friday','Saturday','Sunday'],
+		days_of_week = {
+						us: ['Monday','Tuesday','Wednesday', 'Thursday','Friday','Saturday','Sunday'],
+						es: ['Lunes','Martes',"Miércoles", 'Jueves','Viernes','Sábado','Domingo'],
+						fr: ['Lundi','Mardi','Mercredi', 'Jeudi','Vendredi','Samedi','Dimanche']
+	}
 		current_day=0,
 		offscreen_decal_x=600;
 	
@@ -41,14 +45,14 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 		doc.addImage(imgData, 'JPEG', 40, 5, 130, 30);
 		doc.setFont("helvetica");
 		
-		for (var i=0; i< days_of_week.length;i++) {
+		for (var i=0; i< days_of_week[drillProvider.getLang()].length;i++) {
 			var curY = 50+i*34;
 			
 			doc.line(65, curY-8, 145, curY-8);
 			//doc.setTextColor(224,98,132);
 			doc.setFontSize(16);
 			doc.setFontType("italic");
-			doc.text(20, curY, days_of_week[i]);
+			doc.text(20, curY, days_of_week[drillProvider.getLang()][i]);
 			doc.setFontSize(10);
 			var myGroup = self.getSvg().selectAll ("g#drill-"+i+" g");
 			
@@ -65,7 +69,7 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 					doc.setFontType("normal");
 				}
 				var myText = d.text, 
-					myHint =(d.functional && d.leaf.suggested_subleaf)?(" (hint: "+d.leaf.suggested_subleaf.display.toLowerCase()+")"):"";
+					myHint =(d.functional && d.leaf.suggested_subleaf)?(" ("+d.leaf.suggested_subleaf.display.toLowerCase()+")"):"";
 				
 				
 				doc.text(self.current_x,self.current_y,myText);
@@ -104,16 +108,16 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 	 */
 	self.generateAlert = function (x, y, label){
 		
-		var myAlert = self.getSvg().append("g").attr("class","alert").attr("transform", "translate("+(x-140)+","+(y+25)+")");
+		var myAlert = self.getSvg().append("g").attr("class","alert").attr("transform", "translate("+(x-110)+","+(y+25)+")");
 		myAlert.append("rect")
-		.attr("width", 300)
+		.attr("width", 340)
 		.attr("height", 40)
 		.attr("fill", "white")
 		.style("stroke", "#455ba1")
 		.style("fill-opacity",0.9);
 		
 		myAlert.append("text")
-		.attr("x", 150)
+		.attr("x", 170)
 		.attr("y", 24)
 		.attr("text-anchor", "middle")
 		.attr("fill", "black")
@@ -181,7 +185,7 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 			.attr("y", 7)
 			.style("text-anchor", "middle")
 			.attr("class","day")
-			.text(days_of_week[i]);
+			.text(days_of_week[drillProvider.getLang()][i]);
 		
 			var myRndLeaves= drillProvider.getFormattedDrill(weeklyDrills[i]);
 	    

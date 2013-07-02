@@ -13,7 +13,18 @@ require(["TrunkManager"], function (TrunkManager) {
 		arc_outer_text_radius = 158,
 		arc_center_radius= (arc_inner_radius+(arc_outer_radius-arc_inner_radius)/2),
 		slider_radius = 12,
-		angular_coef_char=2.2;
+		angular_coef_char=2.2,
+		settings_str = {
+						'us': "Settings have been saved.",
+						'fr': "Configuration sauvegardée.",
+						'es': "Ajustes guardados."
+		},
+		donotshow_str = {
+				'us': "Do not show category",
+				'fr': "Ne pas afficher catégorie",
+				'es': "Esconder categoría"
+}
+		;
 	
 	self.colors = d3.scale.ordinal().range(["rgb(158,1,66)",
 	                                        "rgb(213,62,79)",
@@ -31,6 +42,8 @@ require(["TrunkManager"], function (TrunkManager) {
 	                                        "rgb(85,38,138)",
 	                                        "rgb(177,26,40)",
 	                                        "rgb(104,14,32)"]);
+	
+	self.language='us';
 	self.current_branch=0;
 	
 	/**
@@ -56,7 +69,7 @@ require(["TrunkManager"], function (TrunkManager) {
 		var myResult = "";
 		
 		if (max_chars>4) {
-			myResult = d.name;
+			myResult = d.name_lcl?d.name_lcl[self.language]:d.name;
 			if (myResult.length>max_chars) {
 				myResult = myResult.substring(0,max_chars-4)+"...";
 			}
@@ -206,7 +219,7 @@ require(["TrunkManager"], function (TrunkManager) {
 							.outerRadius(arc_outer_radius)
 			)
 			.on ("mouseover", function (d) {
-				d3.select(this).attr("title", function (d) { return d.name+": "+d.pct+"%"});
+				d3.select(this).attr("title", function (d) { return d.pct+"%"});
 				self.getSvg().selectAll("textPath.leaf_name").filter(function (g) { return g._id===d._id}).style("fill","#e06284");
 				//Update the legend
 				self.getSvg().selectAll("g.legend text").filter(function (g) { return g._id!=d._id})
@@ -303,7 +316,7 @@ require(["TrunkManager"], function (TrunkManager) {
 		
 		//We create the legend
 		var legends = canvas_donut.append("g")
-		.attr("transform", "translate(190,-235)")
+		.attr("transform", "translate(182,-235)")
 		.selectAll("g")
 		.data(branch.leaves)
 		.enter()
@@ -332,7 +345,7 @@ require(["TrunkManager"], function (TrunkManager) {
 		.style("font-size", "10px")
 		.attr("x", function (d,i) { return 45})
 		.attr("y", function (d,i) { return 100})
-		.text (function (d) { return d.name;})
+		.text (function (d) { return d.name_lcl?d.name_lcl[self.language]:d.name;})
 	}
 	
 	/**
@@ -344,7 +357,7 @@ require(["TrunkManager"], function (TrunkManager) {
 	
 		self.getSvg().append("g")
 		.selectAll("text")
-		.data(_.map(branches, function (d) { return d.name}))
+		.data(branches)
 		.enter()
 		.append("text")
 		.attr("class", function (d,i) {return (i===self.current_branch)?"branch_title active_title":"branch_title inactive_title"})
@@ -354,17 +367,55 @@ require(["TrunkManager"], function (TrunkManager) {
 			return 8+18*(i-self.current_branch)-(i<self.current_branch?10:0);
 		})
 		.attr("text-anchor", "middle")
-		.text(function (d) { return d;})
+		.text(function (d) { 
+			var name =  d.name_lcl?d.name_lcl[self.language]:d.name;
+			var myResult = d.donotshow?"( "+name+" )":name;
+			return myResult;
+			})
 		.on ("mousedown", function (d,i) {
 			self.current_branch = i;
 			self.getSvg().selectAll("text.branch_title")
-			.attr("class", function (d,i) {return (i===self.current_branch)?"branch_title active_title":"branch_title inactive_title"})
+			.attr("class", function (g,j) {return (j===self.current_branch)?"branch_title active_title":"branch_title inactive_title"})
 			.transition ()
 			.duration(200)
 			.attr("font-size", function (g,j) {return (j===self.current_branch)?28:12})
 			.attr("y", function (g,j) {
 				return 8+18*(j-self.current_branch)-(j<self.current_branch?10:0);
 			})
+			
+			self.getSvg().selectAll("g.donotshow").remove();
+			
+			if (i!=0) {
+				
+				
+				//Display the option to not to show a category
+				var myGroup  = self.getSvg().append("g").attr("class", "donotshow").attr("transform", "translate(-60,180)");
+				myGroup.append("image")
+				.attr("xlink:href", !d.donotshow?"/images/donotshow_off.png":"/images/donotshow_on.png")
+				.attr("x",0)
+				.attr("y",0)
+				.attr("width",16)
+				.attr("height",17);
+				
+				myGroup.append("text")
+				.attr("class", "leaf_text")
+				.attr("x",25)
+				.attr("y",13)
+				.text(donotshow_str[self.language])
+				.on("mousedown", function (g) {
+					d.donotshow = !d.donotshow;
+					self.getSvg().selectAll("g.donotshow image")
+					.attr("xlink:href", !d.donotshow?"/images/donotshow_off.png":"/images/donotshow_on.png");
+					
+				
+				self.getSvg().selectAll("text.branch_title")
+				.text(function (f) { 
+							var name =  f.name_lcl?f.name_lcl[self.language]:f.name;
+							var myResult = f.donotshow?"( "+name+" )":name;
+							return myResult;
+							});
+				});
+			};
 			
 			self.displayCurrentDonut();
 			
@@ -388,12 +439,13 @@ require(["TrunkManager"], function (TrunkManager) {
 		.style("fill-opacity",0.9);
 		
 		myAlert.append("text")
-		.attr("x", 30)
+		.attr("x", 155)
 		.attr("y", 54)
 		.attr("fill", "black")
+		.attr("text-anchor", "middle")
 		.style("opacity",1)
 		.style("font-size", "18px")
-		.text("Settings have been saved.");
+		.text(settings_str[self.language]);
 		
 		myAlert.transition().delay(800).style("opacity",0).each ("end", function() {d3.select("g.alert").remove();});
 	}
@@ -418,6 +470,7 @@ require(["TrunkManager"], function (TrunkManager) {
 
 	
 	$(document).ready(function () {
+		self.language = $.cookie ('tddd_lang')?$.cookie ('tddd_lang'):'us';
 		trunkManager.setBranches($.parseJSON($('#branches').val()));
 		trunkManager.loadFromCookie();
 		self.generateSettingsDonuts();

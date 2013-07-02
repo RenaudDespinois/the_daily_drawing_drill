@@ -1,0 +1,24 @@
+extends ../layout
+
+block head
+	meta(name='description', value='The Daily Drawing Drill: drawing exercises randomly generated to help improve your drawing skills! Practice your drawing with different exercises about styles, techniques, ambiance...')
+	meta(name='title', value='The Daily Drawing Drill: Home')
+	
+	
+block menu
+	- var ref_page='home'
+
+block content
+	h1 Bienvenido
+	p Bienvenido a 'The Daily Drawing Drill'!
+	p Te gusta practicar el dibujo a diario, ¿pero acabas haciendo siempre los mismos ejercicios? Pues aquí tienes una página hecha para tí!
+	p Sólo decide si quieres un 
+		a(href='/daily') simple ejercicio diario 
+		span o un  
+		a(href='/weekly') programa semanal 
+		span más complejo y deja los algoritmos increíblemente complejos escondidos detrás de esta página encontrarte una nueva forma de mejorar tu dibujo!
+	p	Puedes generar nuevos ejercicios, conservar elementos pinchando en ellos o configurar 
+		a(href='/settings') cómo funciona el generador 
+		span y más aún....
+	p	Aprovecha y disfruta dibujando! 
+	p.signature R3nD

@@ -6,7 +6,7 @@ var	mongoose = require('mongoose'),
 	Trunk = mongoose.model('Trunk'),
 	Branch = mongoose.model('Branch');
 
-exports.weeklyGet = function(req, res){
+exports.weeklyGet = function(req, res, language){
 	Trunk.find({
 				name: 'Main'
 				}, 
@@ -21,7 +21,8 @@ exports.weeklyGet = function(req, res){
 										},
 										function (err2, mybranches) {
 											if (mybranches && mybranches.length) {
-												res.render('weekly', { branches: JSON.stringify(mybranches)});
+												res.render(language+'/weekly', {  locale: language,
+																		branches: JSON.stringify(mybranches)});
 											} else {
 												res.render('error', { message: 'A Mongoose error has occured.' });
 											} 

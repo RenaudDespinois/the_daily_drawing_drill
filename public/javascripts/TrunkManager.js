@@ -52,6 +52,13 @@ define('TrunkManager', function() {
 		myStr.substring(0, myStr.length-2);	
 		//$.cookie ('tddd_branches', JSON.stringify(_branches), { expires: 7, path: '/' });
 		$.cookie ('tddd_branches', myStr, { expires: 7, path: '/' });
+		
+		myStr = "";
+		for (var i=0;i<_branches.length;i++)
+			myStr += _branches[i]._id+"|"+_branches[i].donotshow+",";
+		myStr.substring(0, myStr.length-2);	
+		//$.cookie ('tddd_branches', JSON.stringify(_branches), { expires: 7, path: '/' });
+		$.cookie ('tddd_categories', myStr, { expires: 7, path: '/' });
 	}
 	
 	
@@ -75,6 +82,25 @@ define('TrunkManager', function() {
 						_branches[i].leaves[j].weight = parseFloat(myWeight);
 				}
 		}
+		
+		myCookie = $.cookie ('tddd_categories');
+		
+		if (myCookie) {
+			var myTokens = myCookie.split(",");
+			var myMap = {};
+			myTokens.forEach (function (d) { 
+				var couple = d.split("|");
+				myMap[couple[0]]=couple[1];
+			})
+			for (var i=0;i<_branches.length;i++) {
+				var donotshow = myMap[_branches[i]._id];
+				if (donotshow)
+					_branches[i].donotshow = (donotshow==="true");
+			}
+				
+		}
+		
+		
 	}
 	
 	return TrunkManager;

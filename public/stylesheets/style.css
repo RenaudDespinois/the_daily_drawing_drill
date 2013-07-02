@@ -44,6 +44,17 @@ a:hover {
 /*
  * Main layout
  */
+#lang-container {
+  position: relative;
+  height: 17px;
+  width: 130px;
+  display: inline;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  left: 790px;
+  top: 10px;
+}
 #menu-container {
   width: 80px;
   display: block;
@@ -60,7 +71,7 @@ a:hover {
   padding: 0;
   position: relative;
   left: 300px;
-  top: -380px;
+  top: -400px;
   width: 520px;
 }
 #content-container {

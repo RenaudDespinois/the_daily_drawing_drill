@@ -6,7 +6,7 @@ var	mongoose = require('mongoose'),
 	Trunk = mongoose.model('Trunk'),
 	Branch = mongoose.model('Branch');
 
-exports.settingsGet = function(req, res){
+exports.settingsGet = function(req, res, language){
 	Trunk.find({
 				name: 'Main'
 				}, 
@@ -21,7 +21,8 @@ exports.settingsGet = function(req, res){
 										},
 										function (err2, mybranches) {
 											if (mybranches && mybranches.length) {
-												res.render('settings', { branches: JSON.stringify(mybranches)});
+												res.render(language+'/settings', {  locale: language,
+																			branches: JSON.stringify(mybranches)});
 											} else {
 												res.render('error', { message: 'A Mongoose error has occured.' });
 											} 

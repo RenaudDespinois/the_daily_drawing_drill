@@ -9,7 +9,7 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 		svg_height=185,
 		default_x=20,
 		default_y=40,
-		max_width=335,
+		max_width=310,
 		line_spacing=35,
 		lock_dx=-10,
 		lock_dy=-33,
@@ -65,16 +65,16 @@ require(["DrillProvider", "TrunkManager"], function (DrillProvider, TrunkManager
 	 */
 	self.generateAlert = function (x, y, label){
 		
-		var myAlert = self.getSvg().append("g").attr("class","alert").attr("transform", "translate("+(x-140)+","+(y+25)+")");
+		var myAlert = self.getSvg().append("g").attr("class","alert").attr("transform", "translate("+(x-110)+","+(y+25)+")");
 		myAlert.append("rect")
-		.attr("width", 300)
+		.attr("width", 340)
 		.attr("height", 40)
 		.attr("fill", "white")
 		.style("stroke", "#455ba1")
 		.style("fill-opacity",0.9);
 		
 		myAlert.append("text")
-		.attr("x", 150)
+		.attr("x", 170)
 		.attr("y", 24)
 		.attr("text-anchor", "middle")
 		.attr("fill", "black")

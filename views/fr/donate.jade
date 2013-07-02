@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 
 block head
 	meta(name='description', value='The Daily Drawing Drill: if you like the site, leave a coin so that I can go on improving it and bringing you new fantastic features!')
@@ -8,10 +8,10 @@ block menu
 	- var ref_page='donate'
 
 block content
-	h1 Donate
-	p Well, if you like the site, or think it's in some way helpfull to you, or just if you feel really generous today, don't hesitate to leave a coin!
-	p It will encourage me to go on and improve the site, like improving the site performance, adding more drill category types or even giving the possibility to manage user accounts and keep trace of all your drills!
-	p Thank's for your support!
+	h1 Faire un don
+	p Si vous aimez le site, ou si il est vous utile, ou si vous vous sentez particuli&egrave;rement g&eacute;n&eacute;reux aujourd'hui, n'&eacute;sitez pas &agrave; me laisser une pi&egrave;ce!
+	p Cela m'encourager &agrave; continuer et &agrave; am&eacute;liorer le site, en am&eacute;liorant les performances, en cr&eacute;ant plus d'&eacute;l&eacute;ments par cat&eacute;gories ou en donnant la possibilt&eacute; de g&eacute;rer des comptes utilisateurs pour sauvegarder tous vos exercices!
+	p Merci pour votre soutien!
 	#paypal_form
 		form(action="https://www.paypal.com/cgi-bin/webscr", method="post", target="_blank")
 			input(type="hidden",name="cmd",value="_s-xclick")

@@ -1,0 +1,19 @@
+extends ../layout
+
+block head
+	meta(name='description', value='The Daily Drawing Drill: what is it all about, why I made this page, what I intend to achieve!')
+	meta(name='title', value='The Daily Drawing Drill: About')
+	
+block menu
+	- var ref_page='about'
+
+block content
+	h1 A propos
+	p J'ai fait cett page pour ceux qui, comme moi, n'arrivent pas &agrave; sortir de leur routine d'exercices de dessin. Je pense que c'est plus facile de tenter un nouvel exercice si un joli site vous y invite!
+	p J'ai essay&eacute; de faire cette page du mieux que j'ai pu mais il reste certainement des erreurs, des coquilles et peut-&ecirc;tre m&ecirc;me des bugs.
+	p Le site est optimis&eacute; principalement pour Firefox, et dans une moindre mesure pour Google Chrome. Pour les utilisateurs d'Internet Explorer, je suis sur Mac OS et je n'ai pas vraiment eu le courage de me lancer dans cette t&acirc;che...
+	p Le g&eacute;n&eacute;rateur n'est peut-&ecirc;tre &eacute;galement pas des plus pr&eacute;cis et certains exercices peuvent r&eacute;sulter incoh&eacute;rents (ne vous offensez pas si il vous propose de dessiner une cr&eacute;ature fantastique en vous basant sur votre propre corps!).
+	p Donc, si vous avez commentaire, remarque ou suggestion, cliquez ici ;
+		img.clickable(id='mailto', src='/images/mailto.png', title='Send mail', width='32px', height='24px', onclick='window.open("mailto:renaud.despinois@gmail.com")', onmouseover='this.src="/images/mailto_hover.png"', onmouseout='this.src="/images/mailto.png"')
+	p J'esp&egrave;re que ce site pourra vous &ecirc;tre utile!
+	p.signature R3nD

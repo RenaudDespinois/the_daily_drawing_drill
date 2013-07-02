@@ -1,14 +1,19 @@
 doctype 5
 html
 	head
-	meta(name='keywords', value='drawing, exercise, exercises, drawing exercise, drawing exercises, drawing drill, drawing practice, pose, reference, digital painting, pencils, watercolors, markers, values, lines, shading')
-	title= 'The Daily Drawing Drill'
-	link(rel='stylesheet', href='/stylesheets/style.css')
-	include ../public/javascripts/google_analytics.js
-	
-	block head
+		meta(name='keywords', value='drawing, exercise, exercises, drawing exercise, drawing exercises, drawing drill, drawing practice, pose, reference, digital painting, pencils, watercolors, markers, values, lines, shading')
+		meta(charset='utf-8')
+		title= 'The Daily Drawing Drill'
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		script(src='/javascripts/libs/jquery/jquery-1.10.1.min.js')
+		script(src='/javascripts/libs/jquery/jquery_cookie.js')
+		include ../public/javascripts/google_analytics.js
+		script(src='/javascripts/localization.js')
+		block head
 	body
 		#content-container
+			#lang-container
+				include lang.jade
 			#menu-container
 				block menu
 				include menu.jade

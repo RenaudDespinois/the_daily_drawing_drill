@@ -1,0 +1,25 @@
+extends ../layout
+
+block head
+	meta(name='description', value='The Daily Drawing Drill: generate a a whole week of exercises! Lock the features you would like to keep and generate an infinite number of combination using styles, techniques, ambiance...')
+	meta(name='title', value='The Daily Drawing Drill: Weekly drill')
+	script(src='/javascripts/libs/jquery/jquery_cookie.js')
+	script(src='/javascripts/libs/underscore/underscore-1.3.3.js')
+	script(src='/javascripts/libs/d3/d3.v3.min.js')
+	script(src='/javascripts/libs/jspdf/jspdf.min.js')
+	script(src='/javascripts/libs/require/require.js',type="text/javascript",charset="utf-8",data-main='/javascripts/weekly')
+	
+block menu
+	- var ref_page='weekly'
+
+block content
+	h1 Exercices de la semaine
+	input(type='hidden',id='branches',value=branches)
+	#svg-container
+	img.clickable(id='previous', src='/images/arrow_prev.png', title='Retour', width='34px', height='31px', onmouseover='this.src="/images/arrow_prev_hover.png"', onmouseout='this.src="/images/arrow_prev.png"'))
+	img.clickable(id='next', src='/images/arrow_next.png', title='Suivant', width='34px', height='31px', onmouseover='this.src="/images/arrow_next_hover.png"', onmouseout='this.src="/images/arrow_next.png"'))
+	img.clickable(id='reload_day', src='/images/reload_day.png', title='Relancer le jour', width='28px', height='31px', onmouseover='this.src="/images/reload_day_hover.png"', onmouseout='this.src="/images/reload_day.png"'))
+	img.clickable(id='reload', src='/images/reload.png', title='Relancer tout', width='28px', height='31px', onmouseover='this.src="/images/reload_hover.png"', onmouseout='this.src="/images/reload.png"'))
+	img.clickable(id='lock_free', src='/images/lock_free.png', title='Enlever les verrous', width='30px', height='34px', onmouseover='this.src="/images/lock_free_hover.png"', onmouseout='this.src="/images/lock_free.png"'))
+	img.clickable(id='export', src='/images/export.png', title='Exporter vers PDF', width='28px', height='34px', onmouseover='this.src="/images/export_hover.png"', onmouseout='this.src="/images/export.png"'))
+	

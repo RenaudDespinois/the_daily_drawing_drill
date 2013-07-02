@@ -1,0 +1,19 @@
+extends ../layout
+
+block head
+	meta(name='description', value='The Daily Drawing Drill: what is it all about, why I made this page, what I intend to achieve!')
+	meta(name='title', value='The Daily Drawing Drill: About')
+	
+block menu
+	- var ref_page='about'
+
+block content
+	h1 Acerca
+	p He hecho esta página para todos aquellos que, como yo, no consiguen salir de la rutina de ejercicios que tienen. Creo que es más fácil probar ejercicios nuevos si una bonita página te invita a ello.
+	p He intentado hacerla lo mejor posible, pero habré dejado pasar faltas, bugs y otros problemas seguramente.
+	p El sitio está optimizado para Firefox principalmente, así como para Google Chrome. Para los usuarios de Internet Explorer, estoy con Mac Os y me he querido ahorrar unos dolores de cabeza...
+	p El generador de ejercicios puede que tampoco sea de lo más adecuado y que os proponga cosas un poco incoherentes (no os ofendaís si se os propone de dibujar criaturas fantásticas basadas en vuestro propio cuerpo).
+	p Así que si tenéis cualquier comentario, pregunta o sugerencia, me podéis escribir pinchando ahí:
+		img.clickable(id='mailto', src='/images/mailto.png', title='Send mail', width='32px', height='24px', onclick='window.open("mailto:renaud.despinois@gmail.com")', onmouseover='this.src="/images/mailto_hover.png"', onmouseout='this.src="/images/mailto.png"')
+	p Espero sinceramente que está paginá le sirva de algo a alguién!
+	p.signature R3nD
